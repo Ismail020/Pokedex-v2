@@ -9,8 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#fff",
+        background: "#eff1f7",
+      },
+      maxWidth: {
+        '9xl': '1920px',
+      },
+      padding: {
+        "50": "50px",
       },
     },
   },
