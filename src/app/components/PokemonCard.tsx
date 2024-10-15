@@ -1,204 +1,81 @@
-import { getPokemon } from "@/service/getPokemon";
+"use client"
+
 import Image from "next/image";
+import { Pokemon } from "./PokemonData";
+import { gsap } from "gsap";
+import { useRef } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-export interface ResultProps {
-    name: string;
-    url: string;
-}
+type PokemonCardProps = {
+    pokemonData: Pokemon;
+    index: number;
+};
 
-export interface Pokemon {
-    abilities: Ability[];
-    base_experience: number;
-    cries: Cries;
-    forms: Species[];
-    game_indices: GameIndex[];
-    height: number;
-    held_items: any[];
-    id: number;
-    is_default: boolean;
-    location_area_encounters: string;
-    moves: Move[];
-    name: string;
-    order: number;
-    past_abilities: any[];
-    past_types: any[];
-    species: Species;
-    sprites: Sprites;
-    stats: Stat[];
-    types: Type[];
-    weight: number;
-}
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export interface Ability {
-    ability: Species;
-    is_hidden: boolean;
-    slot: number;
-}
+export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
+    const cardRef = useRef<HTMLDivElement | null>(null);
 
-export interface Species {
-    name: string;
-    url: string;
-}
+    useGSAP(() => {
+        if (cardRef.current) {
+            const delay = (index % 4) * 0.1;
 
-export interface Cries {
-    latest: string;
-    legacy: string;
-}
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: cardRef.current,
+                    start: "top 95%",
+                    toggleActions: "play none none none",
+                },
+            });
 
-export interface GameIndex {
-    game_index: number;
-    version: Species;
-}
-
-export interface Move {
-    move: Species;
-    version_group_details: VersionGroupDetail[];
-}
-
-export interface VersionGroupDetail {
-    level_learned_at: number;
-    move_learn_method: Species;
-    version_group: Species;
-}
-
-export interface GenerationV {
-    "black-white": Sprites;
-}
-
-export interface GenerationIv {
-    "diamond-pearl": Sprites;
-    "heartgold-soulsilver": Sprites;
-    platinum: Sprites;
-}
-
-export interface Versions {
-    "generation-i": GenerationI;
-    "generation-ii": GenerationIi;
-    "generation-iii": GenerationIii;
-    "generation-iv": GenerationIv;
-    "generation-v": GenerationV;
-    "generation-vi": { [key: string]: Home };
-    "generation-vii": GenerationVii;
-    "generation-viii": GenerationViii;
-}
-
-export interface Other {
-    dream_world: DreamWorld;
-    home: Home;
-    "official-artwork": OfficialArtwork;
-    showdown: Sprites;
-}
-
-export interface Sprites {
-    back_default: string;
-    back_female: null;
-    back_shiny: string;
-    back_shiny_female: null;
-    front_default: string;
-    front_female: null;
-    front_shiny: string;
-    front_shiny_female: null;
-    other?: Other;
-    versions?: Versions;
-    animated?: Sprites;
-}
-
-export interface GenerationI {
-    "red-blue": RedBlue;
-    yellow: RedBlue;
-}
-
-export interface RedBlue {
-    back_default: string;
-    back_gray: string;
-    back_transparent: string;
-    front_default: string;
-    front_gray: string;
-    front_transparent: string;
-}
-
-export interface GenerationIi {
-    crystal: Crystal;
-    gold: Gold;
-    silver: Gold;
-}
-
-export interface Crystal {
-    back_default: string;
-    back_shiny: string;
-    back_shiny_transparent: string;
-    back_transparent: string;
-    front_default: string;
-    front_shiny: string;
-    front_shiny_transparent: string;
-    front_transparent: string;
-}
-
-export interface Gold {
-    back_default: string;
-    back_shiny: string;
-    front_default: string;
-    front_shiny: string;
-    front_transparent?: string;
-}
-
-export interface GenerationIii {
-    emerald: OfficialArtwork;
-    "firered-leafgreen": Gold;
-    "ruby-sapphire": Gold;
-}
-
-export interface OfficialArtwork {
-    front_default: string;
-    front_shiny: string;
-}
-
-export interface Home {
-    front_default: string;
-    front_female: null;
-    front_shiny: string;
-    front_shiny_female: null;
-}
-
-export interface GenerationVii {
-    icons: DreamWorld;
-    "ultra-sun-ultra-moon": Home;
-}
-
-export interface DreamWorld {
-    front_default: string;
-    front_female: null;
-}
-
-export interface GenerationViii {
-    icons: DreamWorld;
-}
-
-export interface Stat {
-    base_stat: number;
-    effort: number;
-    stat: Species;
-}
-
-export interface Type {
-    slot: number;
-    type: Species;
-}
-
-
-export default async function PokemonCard({ index }: { index: number }) {
-    const pokemonData = await getPokemon(index);
+            timeline.fromTo(
+                cardRef.current,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    delay: delay,
+                    ease: "power2.out",
+                }
+            );
+        }
+    });
 
     return (
-        <div className="max-w-sm rounded relative w-full">
-            <h2 className="text-xl font-bold text-center">{pokemonData.name}</h2>
+        <div ref={cardRef} className="w-full opacity-0 bg-white border-none rounded-2xl shadow-lg h-36">
             <Image
-                src={pokemonData.sprites.other.home.front_default}
+                src={pokemonData.data.sprites.other?.home.front_default}
                 alt={pokemonData.name}
                 width={200}
                 height={200}
-                className="object-contain"
+                className="rounded -mt-16 mx-auto w-24"
             />
+            <div className="pt-6 flex flex-col justify-center items-center">
+                <span className="text-gray-500 text-sm">
+                    N°{pokemonData.data.id.toString().padStart(3, '0')}
+                </span>
+                <h3 className="font-medium text-lg">{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h3>
+
+                <div className="flex gap-2 justify-center mt-1">
+                    {pokemonData.data.types.map((type, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="w-[50px] h-[22px] relative"
+                            >
+                                <Image
+                                    src={`/types/${type.type.name}.svg`}
+                                    alt="Pokemon logo"
+                                    layout='fill'
+                                    objectFit='contain'
+                                />
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 }

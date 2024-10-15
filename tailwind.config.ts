@@ -13,7 +13,7 @@ const config: Config = {
         background: "#eff1f7",
       },
       maxWidth: {
-        '9xl': '1920px',
+        '9xl': '1440px',
       },
       padding: {
         "50": "50px",

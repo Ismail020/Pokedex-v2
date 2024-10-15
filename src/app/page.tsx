@@ -3,40 +3,35 @@ import PokemonCard from "./components/PokemonCard";
 import LoadMore from "./components/LoadMore";
 import { fetchPokemons } from "@/service/action";
 
-export interface Pokemons {
-  count: number;
-  next: string;
-  previous: null;
-  results: Result[];
-}
-
-export interface Result {
+export interface Pokemon {
   name: string;
   url: string;
+  id: number;
 }
 
 export default async function Home() {
-  const data: Pokemons = await fetchPokemons(0);
+  const data: Pokemon[] = await fetchPokemons(0);
 
   return (
-    <main className="sm:p-16 py-16 px-8 flex flex-col gap-10">
-      <Image
-        src="/International_Pokémon_logo.svg"
-        alt="Pokemon logo"
-        width={180}
-        height={38}
-        priority
-        className="m-auto"
-      />
+    <main className="m-auto max-w-9xl px-5 md:px-50 pb-50">
+      <div className="flex flex-col space-y-20">
+        <Image
+          src="/International_Pokémon_logo.svg"
+          alt="Pokemon logo"
+          width={180}
+          height={38}
+          priority
+          className="mx-auto my-10"
+        />
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 w-full">
-        {data.map((pokemon: Result) => {
-          const index = pokemon.url.split("/").filter(Boolean).pop();
-          return <PokemonCard key={index} index={index}/>;
-        })}
-      </section>
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-20 gap-x-8 w-full">
+          {data.map((pokemon: Pokemon, index: number) => {
+            return <PokemonCard key={index} pokemonData={pokemon} index={index} />;
+          })}
+        </section>
 
-      <LoadMore />
+        <LoadMore />
+      </div>
     </main>
   );
 }
