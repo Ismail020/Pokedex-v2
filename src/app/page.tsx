@@ -1,15 +1,42 @@
 import Image from "next/image";
+import PokemonCard from "./components/PokemonCard";
+import LoadMore from "./components/LoadMore";
+import { fetchPokemons } from "@/service/action";
 
-export default function Home() {
+export interface Pokemons {
+  count: number;
+  next: string;
+  previous: null;
+  results: Result[];
+}
+
+export interface Result {
+  name: string;
+  url: string;
+}
+
+export default async function Home() {
+  const data: Pokemons = await fetchPokemons(0);
+
   return (
-    <div className="max-w-9xl flex justify-center m-auto px-5 md:px-50">
+    <main className="sm:p-16 py-16 px-8 flex flex-col gap-10">
       <Image
-        src="/images/International_Pokémon_logo.svg"
+        src="/International_Pokémon_logo.svg"
         alt="Pokemon logo"
         width={180}
         height={38}
         priority
+        className="m-auto"
       />
-    </div>
+
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 w-full">
+        {data.map((pokemon: Result) => {
+          const index = pokemon.url.split("/").filter(Boolean).pop();
+          return <PokemonCard key={index} index={index}/>;
+        })}
+      </section>
+
+      <LoadMore />
+    </main>
   );
 }
