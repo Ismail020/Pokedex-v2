@@ -37,7 +37,7 @@ export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
                     </div>
                 </div>
             ) : (
-                <Link href={`/pokemon/${pokemonData.name}`}>
+                <Link href={`/pokemon/${pokemonData.name}`} target="_blank">
                     <div>
                         <Image
                             src={pokemonDetails.sprites.other?.home.front_default}
