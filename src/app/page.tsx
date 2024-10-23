@@ -2,7 +2,6 @@ import Image from "next/image";
 import PokemonCard from "./components/PokemonCard";
 import LoadMore from "./components/LoadMore";
 import { fetchPokemons } from "@/service/action";
-import ScrollToTop from "./components/ScrollToTop";
 
 export interface Pokemon {
   name: string;
@@ -32,7 +31,6 @@ export default async function Home() {
         </section>
 
         <LoadMore />
-        <ScrollToTop />
       </div>
     </main>
   );

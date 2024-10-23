@@ -18,16 +18,7 @@ export default async function PokemonPage({ params }: Params) {
 
     return (
         <PokemonWrapper image={data.sprites.other['official-artwork'].front_default}>
-            <div className="flex flex-col space-y-20">
-                <Image
-                    src="/International_Pokémon_logo.svg"
-                    alt="Pokemon logo"
-                    width={180}
-                    height={38}
-                    priority
-                    className="mx-auto py-10"
-                />
-
+            <div className="flex flex-col space-y-20 py-20">
                 <div className="flex max-w-9xl m-auto px-5 md:px-50 justify-between w-full">
                     <div className="w-1/2 flex flex-col items-center relative mx-auto">
                         <div className="h-96 w-96 z-10">

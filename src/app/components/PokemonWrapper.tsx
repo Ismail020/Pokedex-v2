@@ -11,7 +11,7 @@ export default function PokemonWrapper({ image, children }: { image: string; chi
         loading ? (
             <Loader />
         ) : (
-            <div style={{ backgroundColor: darkerColor }} className="h-screen w-full">
+            <div className="h-screen w-full">
                 {children}
             </div>
         )

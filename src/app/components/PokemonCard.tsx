@@ -86,7 +86,7 @@ export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
         >
             {loading ? (
                 <div className="animate-pulse flex gap-4 p-5">
-                    <div className="rounded-full bg-white bg-opacity-10	w-44 h-28">
+                    <div className="rounded-full bg-white bg-opacity-10	w-28 h-28 flex-shrink-0">
                     </div>
                     <div className="flex flex-col justify-center gap-1 w-full">
                         <div className="h-3 bg-white bg-opacity-10 rounded w-10 mb-3"></div>
@@ -95,13 +95,13 @@ export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
                     </div>
                 </div>
             ) : (
-                <Link href={`/pokemon/${pokemonData.name}`} target="_blank" className="flex gap-4 p-5">
-                    <div className="rounded-full bg-white bg-opacity-10	w-28 h-28">
+                <Link href={`/pokemon/${pokemonData.name}`} className="flex gap-4 p-5">
+                    <div className="rounded-full relative bg-white bg-opacity-10 w-28 h-28">
                         <Image
                             src={pokemonDetails.sprites.other?.home.front_default}
                             alt={pokemonData.name}
-                            width={200}
-                            height={200}
+                            layout="fill"
+                            objectFit="contain"
                             className="rounded-20 mx-auto w-24"
                         />
                     </div>
