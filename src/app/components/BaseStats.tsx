@@ -1,4 +1,8 @@
+"use client";
+
 import { Stat } from "./PokemonData";
+import { Tooltip } from "flowbite-react";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 type PokemonStatProps = {
     stats: Stat[];
@@ -53,10 +57,12 @@ export default function BaseStats({ stats }: PokemonStatProps) {
                 {preStats.map((stat, index) => {
                     return (
                         <div key={index} className="flex-col inline-flex items-center border-none rounded-full p-1 mt-1 mr-1 bg-gray-100">
-                            <p className={`border-none rounded-full text-xs text-white w-7 h-7 text-center ${stat.color} flex items-center justify-center`}>
-                                {stat.shortName}
-                            </p>
-                            <p className="text-xs mt-1">
+                            <Tooltip content={capitalizeFirstLetter(stat.name)} className="tooltip content">
+                                <p className={`border-none rounded-full text-xs text-white w-7 h-7 text-center ${stat.color} flex items-center justify-center select-none`}>
+                                    {stat.shortName}
+                                </p>
+                            </Tooltip>
+                            <p className="text-xs mt-1 select-none">
                                 {stat.name === 'total' ? (
                                     stats.reduce((acc, s) => acc + s.base_stat, 0)
                                 ) : (

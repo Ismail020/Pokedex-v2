@@ -3,5 +3,36 @@
 @tailwind utilities;
 
 .vamp {
+    color: rgba(0, 0, 0, 0.6);
     text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.1);
+}
+
+.pokemon-card {
+    position: relative;
+    --gradient-color: rgba(255, 255, 255, 0.1);
+}
+
+.pokemon-card:hover::before {
+    opacity: 1;
+}
+
+.pokemon-card::before {
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+            var(--gradient-color),
+            transparent 40%);
+    border-radius: inherit;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 500ms;
+    width: 100%;
+    z-index: 0;
+}
+
+.pokemon-card a {
+    position: relative;
+    z-index: 5;
 }

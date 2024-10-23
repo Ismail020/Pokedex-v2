@@ -30,7 +30,7 @@ function LoadMore() {
 
   return (
     <>
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-20 gap-x-8 w-full">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-8 w-full !mt-8">
         {data.map((pokemon: Pokemon, index: number) => {
           return <PokemonCard key={index} pokemonData={pokemon} index={index} />;
         })}

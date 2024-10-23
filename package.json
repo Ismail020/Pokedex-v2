@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
+    "flowbite-react": "^0.10.2",
     "gsap": "^3.12.5",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
-    "react-intersection-observer": "^9.13.1"
+    "react-extract-colors": "^1.5.1",
+    "react-intersection-observer": "^9.13.1",
+    "react-wrap-balancer": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^20",
