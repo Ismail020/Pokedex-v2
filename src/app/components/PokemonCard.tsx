@@ -12,7 +12,7 @@ import useMouseMoveEffect from "../utils/useMouseMoveEffect";
 import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
 type PokemonCardProps = {
-    pokemonData: BasePokemon
+    pokemonData: BasePokemon;
     index: number;
 };
 
@@ -64,58 +64,68 @@ export default function PokemonCard({ pokemonData }: PokemonCardProps) {
 
     return (
         <div
-            className="pokemon-card w-full bg-foreground border-none rounded-20 shadow-custom"
-            style={{
-                "--gradient-color-start": gradientStart,
-                "--gradient-color-end": gradientEnd,
-            } as React.CSSProperties}
+            className="pokemon-card w-full rounded-20 border-none bg-foreground shadow-custom"
+            style={
+                {
+                    "--gradient-color-start": gradientStart,
+                    "--gradient-color-end": gradientEnd,
+                } as React.CSSProperties
+            }
         >
             {loading || !pokemonDetails ? (
                 <PokemonCardSkeleton />
             ) : (
-                <Link href={`/pokemon/${pokemonData.name}`} className="flex gap-4 p-5 relative">
-                    <div className="rounded-full relative bg-white bg-opacity-10 w-28 h-28">
+                <Link
+                    href={`/pokemon/${pokemonData.name}`}
+                    className="relative flex gap-4 p-5"
+                >
+                    <div className="relative h-28 w-28 rounded-full bg-white bg-opacity-10">
                         <Image
-                            src={pokemonDetails.sprites.other?.home.front_default || "/PokemonEgg.png"}
+                            src={
+                                pokemonDetails.sprites.other?.home
+                                    .front_default || "/PokemonEgg.png"
+                            }
                             alt={pokemonData.name}
                             layout="fill"
                             objectFit="contain"
-                            className="rounded-20 mx-auto w-24"
+                            className="mx-auto w-24 rounded-20"
                         />
                     </div>
                     <div className="flex flex-col justify-center gap-1">
-                        <span className="text-white text-opacity-50 text-sm">
-                            N°{pokemonDetails.id.toString().padStart(3, '0')}
+                        <span className="text-sm text-white text-opacity-50">
+                            N°{pokemonDetails.id.toString().padStart(3, "0")}
                         </span>
                         {pokemonSpecies?.is_legendary && (
-                            <span className="absolute bg-white bg-opacity-10 text-white text-opacity-50 py-1 px-3 rounded-xl text-sm top-2 right-2">
+                            <span className="absolute right-2 top-2 rounded-xl bg-white bg-opacity-10 px-3 py-1 text-sm text-white text-opacity-50">
                                 Legendary
                             </span>
                         )}
                         {pokemonSpecies?.is_mythical && (
-                            <span className="absolute bg-white bg-opacity-10 text-white text-opacity-50 py-1 px-3 rounded-xl text-sm top-2 right-2">
+                            <span className="absolute right-2 top-2 rounded-xl bg-white bg-opacity-10 px-3 py-1 text-sm text-white text-opacity-50">
                                 Mythical
                             </span>
                         )}
-                        <h3 className="font-medium text-lg text-white">
+                        <h3 className="text-lg font-medium text-white">
                             {capitalizeFirstLetter(pokemonDetails.name)}
                         </h3>
-                        <div className="flex gap-2 mt-1">
-                            {pokemonDetails.types.map((type: Type, index: number) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="w-[25px] h-[25px] relative"
-                                    >
-                                        <Image
-                                            src={`/types/${type.type.name}.svg`}
-                                            alt="Pokemon type"
-                                            layout="fill"
-                                            objectFit="contain"
-                                        />
-                                    </div>
-                                );
-                            })}
+                        <div className="mt-1 flex gap-2">
+                            {pokemonDetails.types.map(
+                                (type: Type, index: number) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="relative h-[25px] w-[25px]"
+                                        >
+                                            <Image
+                                                src={`/types/${type.type.name}.svg`}
+                                                alt="Pokemon type"
+                                                layout="fill"
+                                                objectFit="contain"
+                                            />
+                                        </div>
+                                    );
+                                },
+                            )}
                         </div>
                     </div>
                 </Link>

@@ -1,6 +1,6 @@
 import { fetchPokemon, fetchSpecies } from "@/service/action";
 import { Pokemon, Type } from "@/app/utils/PokemonData";
-import Image from 'next/image'
+import Image from "next/image";
 import capitalizeFirstLetter from "@/app/utils/capitalizeFirstLetter";
 import { MaleIcon, FemaleIcon } from "@/app/components/Icons";
 
@@ -16,18 +16,18 @@ export default async function PokemonPage({ params }: Params) {
 
     return (
         <div className="flex">
-            <div className="max-w-[420px] w-full shadow-custom min-h-screen">
+            <div className="min-h-screen w-full max-w-[420px] shadow-custom">
                 Sidebar
             </div>
-            <div className="w-full px-5 sm:px-[10%] flex flex-col gap-8 py-16 h-full">
-                <div className="flex justify-between w-full items-end">
-                    <div className="flex flex-col justify-between h-96">
-                        <div className="flex flex-col gap-2 mt-1">
+            <div className="flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
+                <div className="flex w-full items-end justify-between">
+                    <div className="flex h-96 flex-col justify-between">
+                        <div className="mt-1 flex flex-col gap-2">
                             {data.types.map((type: Type, index: number) => {
                                 return (
                                     <div
                                         key={index}
-                                        className="w-[50px] h-[50px] relative"
+                                        className="relative h-[50px] w-[50px]"
                                     >
                                         <Image
                                             src={`/types/${type.type.name}.svg`}
@@ -40,31 +40,32 @@ export default async function PokemonPage({ params }: Params) {
                             })}
                         </div>
 
-                        <h1 className="s:text-4xl md:text-8xl text-white drop-shadow-2xl z-10 font-sora font-extrabold">
+                        <h1 className="s:text-4xl z-10 font-sora font-extrabold text-white drop-shadow-2xl md:text-8xl">
                             {capitalizeFirstLetter(data.name)}
                         </h1>
                     </div>
 
-                    <div className="h-96 w-96 z-10">
-                        <div className="w-full h-full relative">
+                    <div className="z-10 h-96 w-96">
+                        <div className="relative h-full w-full">
                             <Image
-                                src={data.sprites.other?.home.front_default || "/PokemonEgg.png"}
+                                src={
+                                    data.sprites.other?.home.front_default ||
+                                    "/PokemonEgg.png"
+                                }
                                 alt={data.name}
-                                layout='fill'
-                                objectFit='contain'
+                                layout="fill"
+                                objectFit="contain"
                             />
                         </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-2.5">
-                    <h1 className="text-2xl	text-white">
-                        Details
-                    </h1>
+                    <h1 className="text-2xl text-white">Details</h1>
 
-                    <div className="w-fit rounded-20 shadow-custom bg-foreground overflow-hidden divide-y-[0.1px] divide-[#3a3a3a] text-white">
-                        <div className="shadow-custom p-5 flex">
-                            <div className="font-black w-[120px]">
+                    <div className="w-fit divide-y-[0.1px] divide-[#3a3a3a] overflow-hidden rounded-20 bg-foreground text-white shadow-custom">
+                        <div className="flex p-5 shadow-custom">
+                            <div className="w-[120px] font-black">
                                 Gender ratio
                             </div>
                             <div>
@@ -76,7 +77,9 @@ export default async function PokemonPage({ params }: Params) {
                                             <div>
                                                 <MaleIcon />
                                             </div>
-                                            {((8 - species.gender_rate) / 8) * 100}%
+                                            {((8 - species.gender_rate) / 8) *
+                                                100}
+                                            %
                                         </div>
                                         <div className="flex gap-2.5 text-female">
                                             <div>
@@ -88,15 +91,11 @@ export default async function PokemonPage({ params }: Params) {
                                 )}
                             </div>
                         </div>
-                        <div className="shadow-custom p-5">
-                            amk
-                        </div>
-                        <div className="shadow-custom p-5">
-                            amk
-                        </div>
+                        <div className="p-5 shadow-custom">amk</div>
+                        <div className="p-5 shadow-custom">amk</div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

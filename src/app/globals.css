@@ -21,7 +21,11 @@
     content: "";
     width: 100px;
     height: 100px;
-    background: linear-gradient(145deg, rgb(var(--gradient-color-start)) 50%, rgb(var(--gradient-color-end)) 50%);
+    background: linear-gradient(
+        145deg,
+        rgb(var(--gradient-color-start)) 50%,
+        rgb(var(--gradient-color-end)) 50%
+    );
     border-radius: 50%;
     position: absolute;
     top: var(--mouse-y);
