@@ -5,6 +5,7 @@ export interface Pokemon {
     forms: Species[];
     game_indices: GameIndex[];
     height: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     held_items: any[];
     id: number;
     is_default: boolean;
@@ -12,7 +13,9 @@ export interface Pokemon {
     moves: Move[];
     name: string;
     order: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     past_abilities: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     past_types: any[];
     species: Species;
     sprites: Sprites;

@@ -6,6 +6,7 @@ export interface Species {
     evolution_chain: EvolutionChain;
     evolves_from_species: null;
     flavor_text_entries: FlavorTextEntry[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     form_descriptions: any[];
     forms_switchable: boolean;
     gender_rate: number;

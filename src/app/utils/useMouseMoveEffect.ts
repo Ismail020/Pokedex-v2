@@ -14,12 +14,16 @@ const useMouseMoveEffect = () => {
 
         const pokemonCards = document.querySelectorAll(".pokemon-card");
         pokemonCards.forEach((pokemonCard) => {
-            pokemonCard.addEventListener("mousemove", handleOnMouseMove);
+            if (pokemonCard instanceof HTMLElement) {
+                pokemonCard.addEventListener("mousemove", handleOnMouseMove);
+            }
         });
 
         return () => {
             pokemonCards.forEach((pokemonCard) => {
-                pokemonCard.removeEventListener("mousemove", handleOnMouseMove);
+                if (pokemonCard instanceof HTMLElement) {
+                    pokemonCard.removeEventListener("mousemove", handleOnMouseMove);
+                }
             });
         };
     }, []);
