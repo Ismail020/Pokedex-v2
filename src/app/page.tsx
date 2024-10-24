@@ -3,14 +3,13 @@ import PokemonCard from "./components/PokemonCard";
 import LoadMore from "./components/LoadMore";
 import { fetchPokemons } from "@/service/action";
 
-export interface Pokemon {
+export interface BasePokemon {
   name: string;
   url: string;
-  id: number;
 }
 
 export default async function Home() {
-  const data: Pokemon[] = await fetchPokemons(0);
+  const data: BasePokemon[] = await fetchPokemons(0);
 
   return (
     <main className="m-auto max-w-9xl px-5 md:px-50 pb-50">
@@ -25,7 +24,7 @@ export default async function Home() {
         />
 
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-8 w-full">
-          {data.map((pokemon: Pokemon, index: number) => {
+          {data.map((pokemon: BasePokemon, index: number) => {
             return <PokemonCard key={index} pokemonData={pokemon} index={index} />;
           })}
         </section>

@@ -5,13 +5,13 @@ import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { fetchPokemons } from "@/service/action";
 import PokemonCard from "./PokemonCard";
-import { Pokemon } from "../page";
+import { BasePokemon } from "../page";
 
 let page = 1;
 
 function LoadMore() {
   const { ref, inView } = useInView();
-  const [data, setData] = useState<Pokemon[]>([]);
+  const [data, setData] = useState<BasePokemon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
  useEffect(() => {
@@ -31,7 +31,7 @@ function LoadMore() {
   return (
     <>
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-8 w-full !mt-8">
-        {data.map((pokemon: Pokemon, index: number) => {
+        {data.map((pokemon: BasePokemon, index: number) => {
           return <PokemonCard key={index} pokemonData={pokemon} index={index} />;
         })}
       </section>

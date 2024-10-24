@@ -1,10 +1,4 @@
 export interface Pokemon {
-    name: string;
-    url:  string;
-    data: Data;
-}
-
-export interface Data {
     abilities:                Ability[];
     base_experience:          number;
     cries:                    Cries;

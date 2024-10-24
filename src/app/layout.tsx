@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { Sora } from 'next/font/google'
 import "./globals.css";
+
+const sora = Sora({
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  variable: '--font-sora',
+});
 
 export const metadata: Metadata = {
   title: "Pokedex website",
@@ -14,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased bg-background`}
+        className={`${sora.variable} antialiased bg-background`}
       >
         {children}
       </body>

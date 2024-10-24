@@ -1,104 +1,82 @@
 "use client";
 
 import Image from "next/image";
-import { Pokemon } from "./PokemonData";
+import { BasePokemon } from "../page";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+import typeColors from "../utils/typeColors";
+import { Pokemon, Type } from "../utils/PokemonData";
+import { Species } from "../utils/SpeciesData";
+import useMouseMoveEffect from "../utils/useMouseMoveEffect";
+import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
 type PokemonCardProps = {
-    pokemonData: Pokemon;
+    pokemonData: BasePokemon
     index: number;
 };
 
-const typeColors: { [key: string]: string } = {
-    normal: "rgba(168, 168, 120, 0.1)",
-    fire: "rgba(240, 128, 48, 0.1)",
-    water: "rgba(104, 144, 240, 0.1)",
-    grass: "rgba(120, 200, 80, 0.1)",
-    flying: "rgba(168, 144, 240, 0.1)",
-    fighting: "rgba(192, 48, 40, 0.1)",
-    poison: "rgba(160, 64, 160, 0.1)",
-    electric: "rgba(248, 208, 48, 0.1)",
-    ground: "rgba(224, 192, 104, 0.1)",
-    rock: "rgba(184, 160, 56, 0.1)",
-    psychic: "rgba(248, 88, 136, 0.1)",
-    ice: "rgba(152, 216, 216, 0.1)",
-    bug: "rgba(168, 184, 32, 0.1)",
-    ghost: "rgba(112, 88, 152, 0.1)",
-    steel: "rgba(184, 184, 208, 0.1)",
-    dragon: "rgba(112, 56, 248, 0.1)",
-    dark: "rgba(112, 88, 72, 0.1)",
-    fairy: "rgba(238, 153, 172, 0.1)",
-    default: "rgba(255, 255, 255, 0.1)",
-};
-
-export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
-    const [pokemonDetails, setPokemonDetails] = useState<any>(null);
+export default function PokemonCard({ pokemonData }: PokemonCardProps) {
+    const [pokemonDetails, setPokemonDetails] = useState<Pokemon | null>(null);
+    const [pokemonSpecies, setPokemonSpecies] = useState<Species | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const res = await fetch(pokemonData.url);
-            const data = await res.json();
-            setPokemonDetails(data);
-            setLoading(false);
+            try {
+                const res = await fetch(pokemonData.url);
+                const data = await res.json();
+                setPokemonDetails(data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching Pokemon details:", error);
+            }
         };
 
         fetchDetails();
     }, [pokemonData.url]);
 
     useEffect(() => {
-        const handleOnMouseMove = e => {
-            const { currentTarget: target } = e;
+        if (pokemonDetails && pokemonDetails.species?.url) {
+            const fetchSpecies = async () => {
+                try {
+                    const res = await fetch(pokemonDetails.species.url);
+                    const data = await res.json();
+                    setPokemonSpecies(data);
+                } catch (error) {
+                    console.error("Error fetching Pokemon species:", error);
+                }
+            };
 
-            const rect = target.getBoundingClientRect(),
-                x = e.clientX - rect.left,
-                y = e.clientY - rect.top;
+            fetchSpecies();
+        }
+    }, [pokemonDetails]);
 
-            target.style.setProperty("--mouse-x", `${x}px`);
-            target.style.setProperty("--mouse-y", `${y}px`);
-        };
+    useMouseMoveEffect();
 
-        const pokemonCards = document.querySelectorAll(".pokemon-card");
-        pokemonCards.forEach(pokemonCard => {
-            pokemonCard.addEventListener("mousemove", handleOnMouseMove);
-        });
+    const gradientStart = pokemonDetails?.types[0]?.type.name
+        ? typeColors[pokemonDetails.types[0].type.name]
+        : typeColors.default;
 
-        return () => {
-            pokemonCards.forEach(pokemonCard => {
-                pokemonCard.removeEventListener("mousemove", handleOnMouseMove);
-            });
-        };
-    }, []);
-
-    const backgroundColor =
-        pokemonDetails && pokemonDetails.types.length > 0
-            ? typeColors[pokemonDetails.types[0].type.name] || typeColors.default
-            : typeColors.default;
+    const gradientEnd = pokemonDetails?.types[1]
+        ? typeColors[pokemonDetails.types[1].type.name]
+        : gradientStart;
 
     return (
         <div
             className="pokemon-card w-full bg-foreground border-none rounded-20 shadow-custom"
             style={{
-                "--gradient-color": backgroundColor,
+                "--gradient-color-start": gradientStart,
+                "--gradient-color-end": gradientEnd,
             } as React.CSSProperties}
         >
-            {loading ? (
-                <div className="animate-pulse flex gap-4 p-5">
-                    <div className="rounded-full bg-white bg-opacity-10	w-28 h-28 flex-shrink-0">
-                    </div>
-                    <div className="flex flex-col justify-center gap-1 w-full">
-                        <div className="h-3 bg-white bg-opacity-10 rounded w-10 mb-3"></div>
-                        <div className="h-4 bg-white bg-opacity-10 rounded w-4/12"></div>
-                        <div className="mt-3 w-[25px] h-[25px] rounded-full bg-white bg-opacity-10"></div>
-                    </div>
-                </div>
+            {loading || !pokemonDetails ? (
+                <PokemonCardSkeleton />
             ) : (
-                <Link href={`/pokemon/${pokemonData.name}`} className="flex gap-4 p-5">
+                <Link href={`/pokemon/${pokemonData.name}`} className="flex gap-4 p-5 relative">
                     <div className="rounded-full relative bg-white bg-opacity-10 w-28 h-28">
                         <Image
-                            src={pokemonDetails.sprites.other?.home.front_default}
+                            src={pokemonDetails.sprites.other?.home.front_default || "/PokemonEgg.png"}
                             alt={pokemonData.name}
                             layout="fill"
                             objectFit="contain"
@@ -109,11 +87,21 @@ export default function PokemonCard({ pokemonData, index }: PokemonCardProps) {
                         <span className="text-white text-opacity-50 text-sm">
                             N°{pokemonDetails.id.toString().padStart(3, '0')}
                         </span>
+                        {pokemonSpecies?.is_legendary && (
+                            <span className="absolute bg-white bg-opacity-10 text-white text-opacity-50 py-1 px-3 rounded-xl text-sm top-2 right-2">
+                                Legendary
+                            </span>
+                        )}
+                        {pokemonSpecies?.is_mythical && (
+                            <span className="absolute bg-white bg-opacity-10 text-white text-opacity-50 py-1 px-3 rounded-xl text-sm top-2 right-2">
+                                Mythical
+                            </span>
+                        )}
                         <h3 className="font-medium text-lg text-white">
                             {capitalizeFirstLetter(pokemonDetails.name)}
                         </h3>
                         <div className="flex gap-2 mt-1">
-                            {pokemonDetails.types.map((type: any, index: number) => {
+                            {pokemonDetails.types.map((type: Type, index: number) => {
                                 return (
                                     <div
                                         key={index}

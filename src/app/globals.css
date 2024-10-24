@@ -9,6 +9,7 @@
 
 .pokemon-card {
     position: relative;
+    overflow: hidden;
     --gradient-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -17,19 +18,19 @@
 }
 
 .pokemon-card::before {
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
-            var(--gradient-color),
-            transparent 40%);
-    border-radius: inherit;
     content: "";
-    height: 100%;
-    left: 0;
-    opacity: 0;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(145deg, rgb(var(--gradient-color-start)) 50%, rgb(var(--gradient-color-end)) 50%);
+    border-radius: 50%;
     position: absolute;
-    top: 0;
-    transition: opacity 500ms;
-    width: 100%;
+    top: var(--mouse-y);
+    left: var(--mouse-x);
     z-index: 0;
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(0);
+    filter: blur(70px);
+    transition: opacity 300ms ease;
 }
 
 .pokemon-card a {
