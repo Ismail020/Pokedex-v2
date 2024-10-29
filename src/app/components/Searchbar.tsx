@@ -2,19 +2,32 @@
 
 import { SearchIcon } from "./Icons";
 import { useState, useEffect, useRef } from "react";
-import { searchPokemonByName } from "@/service/action";
+import { fetchAllPokemons } from "@/service/action";
 import { useRouter } from "next/navigation";
 import { BasePokemon } from "../page";
+import PokemonCard from "./PokemonCard";
 
 export default function Searchbar() {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
+    const [allPokemons, setAllPokemons] = useState<BasePokemon[]>([]);
     const [searchResults, setSearchResults] = useState<BasePokemon[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [searching, setSearching] = useState(false);
 
     const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+    const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        const fetchPokemons = async () => {
+            const data = await fetchAllPokemons();
+            setAllPokemons(data);
+        };
+
+        fetchPokemons();
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -63,18 +76,30 @@ export default function Searchbar() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [open, searchResults, selectedIndex, router]);
 
-    const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchQuery = e.target.value;
         setQuery(searchQuery);
 
-        if (searchQuery) {
-            const results = await searchPokemonByName(searchQuery);
-            setSearchResults(results);
-            setSelectedIndex(results.length > 0 ? 0 : -1); // Set first item as selected if results exist
-        } else {
-            setSearchResults([]);
-            setSelectedIndex(-1);
-        }
+        if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+        setSearching(true);
+
+        debounceTimeout.current = setTimeout(() => {
+            if (searchQuery) {
+                const filteredResults = allPokemons.filter((pokemon) =>
+                    pokemon.name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()),
+                );
+                setSearchResults(filteredResults);
+                setSelectedIndex(filteredResults.length > 0 ? 0 : -1);
+            } else {
+                setSearchResults([]);
+                setSelectedIndex(-1);
+            }
+
+            setSearching(false);
+        }, 200);
     };
 
     return (
@@ -99,7 +124,7 @@ export default function Searchbar() {
                 <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-background/80 p-[1.4rem] backdrop-blur md:p-[10vh] lg:p-[12vh]">
                     <div className="relative mx-auto flex h-fit max-h-full w-full max-w-[47.375rem] flex-col items-center overflow-scroll rounded bg-foreground shadow-custom">
                         <div className="relative w-full">
-                            <div className="sticky top-0 w-full">
+                            <div className="sticky top-0 z-50 w-full">
                                 <form className="w-full">
                                     <label
                                         htmlFor="default-search"
@@ -132,22 +157,18 @@ export default function Searchbar() {
                             </div>
 
                             <div className="w-full text-white shadow-custom">
-                                {searchResults.length > 0 ? (
+                                {searching ? (
+                                    <div className="flex w-full items-center justify-center p-5 text-gray-400">
+                                        Loading...
+                                    </div>
+                                ) : searchResults.length > 0 ? (
                                     <ul className="flex flex-col gap-2 px-3 py-3">
                                         {searchResults.map((pokemon, index) => (
-                                            <li
-                                                key={pokemon.name}
-                                                ref={(el) => {
-                                                    itemRefs.current[index] = el;
-                                                }}
-                                                className={`cursor-pointer rounded px-3 py-4 ${
-                                                    index === selectedIndex
-                                                        ? "bg-gray-700"
-                                                        : "bg-aboveForeground"
-                                                }`}
-                                            >
-                                                {pokemon.name}
-                                            </li>
+                                            <PokemonCard
+                                                key={index}
+                                                pokemonData={pokemon}
+                                                index={index}
+                                            />
                                         ))}
                                     </ul>
                                 ) : (

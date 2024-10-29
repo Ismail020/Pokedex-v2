@@ -93,7 +93,8 @@ export default function PokemonCard({ pokemonData }: PokemonCardProps) {
                     </div>
                     <div className="flex flex-col justify-center gap-1">
                         <span className="text-sm text-white text-opacity-50">
-                            N°{pokemonDetails.id.toString().padStart(3, "0")}
+                            N°
+                            {pokemonDetails.id.toString().padStart(3, "0")}
                         </span>
                         {pokemonSpecies?.is_legendary && (
                             <span className="absolute right-2 top-2 rounded-xl bg-white bg-opacity-10 px-3 py-1 text-sm text-white text-opacity-50">

@@ -1,7 +1,5 @@
 "use server";
 
-import { BasePokemon } from "@/app/page";
-
 export const fetchPokemons = async (page: number) => {
     const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/?offset=${page * 24}&limit=24`,
@@ -25,13 +23,9 @@ export const fetchSpecies = async (url: string) => {
     return data;
 };
 
-export const searchPokemonByName = async (query: string) => {
+export const fetchAllPokemons = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10000");
     const data = await response.json();
 
-    const matches = data.results.filter((pokemon : BasePokemon)  =>
-        pokemon.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    return matches;
+    return data.results;
 };
