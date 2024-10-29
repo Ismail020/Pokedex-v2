@@ -22,7 +22,10 @@ const useMouseMoveEffect = () => {
         return () => {
             pokemonCards.forEach((pokemonCard) => {
                 if (pokemonCard instanceof HTMLElement) {
-                    pokemonCard.removeEventListener("mousemove", handleOnMouseMove);
+                    pokemonCard.removeEventListener(
+                        "mousemove",
+                        handleOnMouseMove,
+                    );
                 }
             });
         };

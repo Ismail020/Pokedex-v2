@@ -3,6 +3,7 @@ import { Pokemon, Type } from "@/app/utils/PokemonData";
 import Image from "next/image";
 import capitalizeFirstLetter from "@/app/utils/capitalizeFirstLetter";
 import { MaleIcon, FemaleIcon } from "@/app/components/Icons";
+import Sidebar from "@/app/components/Sidebar";
 
 interface Params {
     params: {
@@ -16,9 +17,7 @@ export default async function PokemonPage({ params }: Params) {
 
     return (
         <div className="flex">
-            <div className="min-h-screen w-full max-w-[420px] shadow-custom">
-                Sidebar
-            </div>
+            <Sidebar />
             <div className="flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
                 <div className="flex w-full items-end justify-between">
                     <div className="flex h-96 flex-col justify-between">
@@ -63,7 +62,7 @@ export default async function PokemonPage({ params }: Params) {
                 <div className="flex flex-col gap-2.5">
                     <h1 className="text-2xl text-white">Details</h1>
 
-                    <div className="w-fit divide-y-[0.1px] divide-[#3a3a3a] overflow-hidden rounded-20 bg-foreground text-white shadow-custom">
+                    <div className="w-fit overflow-hidden rounded-20 bg-foreground text-white shadow-custom">
                         <div className="flex p-5 shadow-custom">
                             <div className="w-[120px] font-black">
                                 Gender ratio
@@ -91,7 +90,7 @@ export default async function PokemonPage({ params }: Params) {
                                 )}
                             </div>
                         </div>
-                        <div className="p-5 shadow-custom">amk</div>
+                        <div className="p-5">amk</div>
                         <div className="p-5 shadow-custom">amk</div>
                     </div>
                 </div>
