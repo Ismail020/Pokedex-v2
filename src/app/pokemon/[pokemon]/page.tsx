@@ -15,6 +15,12 @@ interface Params {
 export default async function PokemonPage({ params }: Params) {
     const data: Pokemon = await fetchPokemon(params.pokemon);
     const species = await fetchSpecies(data.species.url);
+    const form = {
+        name: data.name.includes("gmax")
+            ? data.name.replace("-gmax", "")
+            : data.name,
+        form: getForm(),
+    };
 
     const gradientStart = data?.types[0]?.type.name
         ? typeColors[data.types[0].type.name]
@@ -24,9 +30,13 @@ export default async function PokemonPage({ params }: Params) {
         ? typeColors[data.types[1].type.name]
         : `${gradientStart}33`;
 
+    function getForm() {
+        return data.name.includes("gmax") ? "Gigantamax" : "";
+    }
+
     return (
         <div
-            className="relative flex z-10"
+            className="relative z-10 flex"
             style={
                 {
                     "--gradient-color-start": gradientStart,
@@ -58,9 +68,16 @@ export default async function PokemonPage({ params }: Params) {
                             })}
                         </div>
 
-                        <h1 className="s:text-4xl font-sora font-extrabold text-white drop-shadow-2xl md:text-8xl">
-                            {capitalizeFirstLetter(data.name)}
-                        </h1>
+                        <div>
+                            {form && (
+                                <p className="text-2xl font-bold text-white">
+                                    {form.form}
+                                </p>
+                            )}
+                            <h1 className="s:text-4xl font-sora font-extrabold text-white drop-shadow-2xl md:text-8xl">
+                                {capitalizeFirstLetter(form.name)}
+                            </h1>
+                        </div>
                     </div>
 
                     <div className="h-96 w-96">
