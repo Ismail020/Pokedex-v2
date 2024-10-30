@@ -15,12 +15,6 @@ interface Params {
 export default async function PokemonPage({ params }: Params) {
     const data: Pokemon = await fetchPokemon(params.pokemon);
     const species = await fetchSpecies(data.species.url);
-    const form = {
-        name: data.name.includes("gmax")
-            ? data.name.replace("-gmax", "")
-            : data.name,
-        form: getForm(),
-    };
 
     const gradientStart = data?.types[0]?.type.name
         ? typeColors[data.types[0].type.name]
@@ -31,8 +25,31 @@ export default async function PokemonPage({ params }: Params) {
         : `${gradientStart}33`;
 
     function getForm() {
-        return data.name.includes("gmax") ? "Gigantamax" : "";
+        if (data.name.includes("gmax")) return "Gigantamax";
+        return "";
     }
+
+    function getBaseName() {
+        const suffixes = [
+            "-gmax",
+        ];
+
+        let baseName = data.name;
+
+        for (const suffix of suffixes) {
+            if (baseName.includes(suffix)) {
+                baseName = baseName.replace(suffix, "");
+                break;
+            }
+        }
+
+        return baseName;
+    }
+
+    const form = {
+        name: getBaseName(),
+        form: getForm(),
+    };
 
     return (
         <div
@@ -47,7 +64,7 @@ export default async function PokemonPage({ params }: Params) {
             <div className="rotate-gradient absolute right-0 top-0 h-[300px] w-[300px]"></div>
 
             <Sidebar />
-            <div className="flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
+            <div className="flex z-20 h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
                 <div className="flex w-full items-end justify-between">
                     <div className="flex h-96 flex-col justify-between">
                         <div className="mt-1 flex flex-col gap-2">
