@@ -26,7 +26,7 @@ export default async function PokemonPage({ params }: Params) {
 
     return (
         <div
-            className="relative flex"
+            className="relative flex z-10"
             style={
                 {
                     "--gradient-color-start": gradientStart,
@@ -37,7 +37,7 @@ export default async function PokemonPage({ params }: Params) {
             <div className="rotate-gradient absolute right-0 top-0 h-[300px] w-[300px]"></div>
 
             <Sidebar />
-            <div className="z-10 flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
+            <div className="flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
                 <div className="flex w-full items-end justify-between">
                     <div className="flex h-96 flex-col justify-between">
                         <div className="mt-1 flex flex-col gap-2">
@@ -58,12 +58,12 @@ export default async function PokemonPage({ params }: Params) {
                             })}
                         </div>
 
-                        <h1 className="s:text-4xl z-10 font-sora font-extrabold text-white drop-shadow-2xl md:text-8xl">
+                        <h1 className="s:text-4xl font-sora font-extrabold text-white drop-shadow-2xl md:text-8xl">
                             {capitalizeFirstLetter(data.name)}
                         </h1>
                     </div>
 
-                    <div className="z-10 h-96 w-96">
+                    <div className="h-96 w-96">
                         <div className="relative h-full w-full">
                             <Image
                                 src={
