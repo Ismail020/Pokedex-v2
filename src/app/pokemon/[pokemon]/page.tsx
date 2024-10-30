@@ -96,7 +96,7 @@ export default async function PokemonPage({ params }: Params) {
 
     return (
         <div
-            className="relative z-10 flex"
+            className="relative z-10 flex overflow-hidden"
             style={
                 {
                     "--gradient-color-start": gradientStart,
