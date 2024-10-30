@@ -82,6 +82,8 @@ export default function Searchbar() {
 
         if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
+        setSearchResults([]);
+        setSelectedIndex(-1);
         setSearching(true);
 
         debounceTimeout.current = setTimeout(() => {
