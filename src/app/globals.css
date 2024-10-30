@@ -41,3 +41,13 @@
     position: relative;
     z-index: 5;
 }
+
+.pokemon-card.picked::before {
+    opacity: 1;
+    scale: 10;
+    filter: blur(25px);
+    transform: translate(0%, 0%) translateZ(0);
+    left: 50% !important;
+    top: -50% !important;
+    transition: none;
+}

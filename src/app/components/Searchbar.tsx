@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { fetchAllPokemons } from "@/service/action";
 import { useRouter } from "next/navigation";
 import { BasePokemon } from "../page";
-import PokemonCard from "./PokemonCard";
+import PokemonSearchCard from "./PokemonSearchCard";
 
 export default function Searchbar() {
     const [open, setOpen] = useState(false);
@@ -164,10 +164,11 @@ export default function Searchbar() {
                                 ) : searchResults.length > 0 ? (
                                     <ul className="flex flex-col gap-2 px-3 py-3">
                                         {searchResults.map((pokemon, index) => (
-                                            <PokemonCard
-                                                key={index}
+                                            <PokemonSearchCard
+                                                key={pokemon.name}
                                                 pokemonData={pokemon}
                                                 index={index}
+                                                selectedIndex={selectedIndex}
                                             />
                                         ))}
                                     </ul>
