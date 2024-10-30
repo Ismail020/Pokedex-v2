@@ -124,7 +124,7 @@ export default function Searchbar() {
                 <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-background/80 p-[1.4rem] backdrop-blur md:p-[10vh] lg:p-[12vh]">
                     <div className="relative mx-auto flex h-fit max-h-full w-full max-w-[47.375rem] flex-col items-center overflow-scroll rounded bg-foreground shadow-custom">
                         <div className="relative w-full">
-                            <div className="sticky top-0 w-full">
+                            <div className="sticky top-0 w-full z-10">
                                 <form className="w-full">
                                     <label
                                         htmlFor="default-search"

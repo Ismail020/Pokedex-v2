@@ -26,12 +26,55 @@ export default async function PokemonPage({ params }: Params) {
 
     function getForm() {
         if (data.name.includes("gmax")) return "Gigantamax";
+        if (data.name.includes("hisui")) return "Hisuian";
+        if (data.name.includes("mega")) {
+            if (data.name.includes("-x")) return "Mega X";
+            if (data.name.includes("-y")) return "Mega Y";
+            return "Mega";
+        }
+        if (data.name.includes("alola")) {
+            if (data.name.includes("-totem")) return "Alolan Totem";
+            if (data.name.includes("-cap")) return "Alolan Cap";
+            return "Alolan";
+        }
+        if (data.name.includes("galar")) {
+            if (data.name.includes("-standard")) return "Galarian Standard";
+            if (data.name.includes("-zen")) return "Galarian Zen";
+            return "Galarian";
+        }
+        if (data.name.includes("totem")) {
+            if (data.name.includes("-alola")) return "Alolan Totem";
+            if (data.name.includes("-disguised")) return "Disguised Totem";
+            if (data.name.includes("-busted")) return "Busted Totem";
+            return "Totem";
+        }
+        if (data.name.includes("ultra")) return "Ultra";
+        if (data.name.includes("primal")) return "Primal";
+        if (data.name.includes("battle-bond")) return "Battle Bond";
         return "";
     }
 
     function getBaseName() {
         const suffixes = [
             "-gmax",
+            "-hisui",
+            "-mega-x",
+            "-mega-y",
+            "-mega",
+            "-totem-alola",
+            "-totem-disguised",
+            "-totem-busted",
+            "-totem",
+            "-alola-cap",
+            "-alola-totem",
+            "-alola",
+            "-galar-standard",
+            "-galar-zen",
+            "-galar",
+            "-ultra",
+            "-primal",
+            "-battle-bond",
+            "-ash",
         ];
 
         let baseName = data.name;
@@ -64,7 +107,7 @@ export default async function PokemonPage({ params }: Params) {
             <div className="rotate-gradient absolute right-0 top-0 h-[300px] w-[300px]"></div>
 
             <Sidebar />
-            <div className="flex z-20 h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
+            <div className="z-20 flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
                 <div className="flex w-full items-end justify-between">
                     <div className="flex h-96 flex-col justify-between">
                         <div className="mt-1 flex flex-col gap-2">
