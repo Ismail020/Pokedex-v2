@@ -4,6 +4,7 @@ import Image from "next/image";
 import capitalizeFirstLetter from "@/app/utils/capitalizeFirstLetter";
 import { MaleIcon, FemaleIcon } from "@/app/components/Icons";
 import Sidebar from "@/app/components/Sidebar";
+import typeColors from "@/app/utils/typeColors";
 
 interface Params {
     params: {
@@ -15,10 +16,28 @@ export default async function PokemonPage({ params }: Params) {
     const data: Pokemon = await fetchPokemon(params.pokemon);
     const species = await fetchSpecies(data.species.url);
 
+    const gradientStart = data?.types[0]?.type.name
+        ? typeColors[data.types[0].type.name]
+        : typeColors.default;
+
+    const gradientEnd = data?.types[1]
+        ? typeColors[data.types[1].type.name]
+        : `${gradientStart}33`;
+
     return (
-        <div className="flex">
+        <div
+            className="relative flex"
+            style={
+                {
+                    "--gradient-color-start": gradientStart,
+                    "--gradient-color-end": gradientEnd,
+                } as React.CSSProperties
+            }
+        >
+            <div className="rotate-gradient absolute right-0 top-0 h-[300px] w-[300px]"></div>
+
             <Sidebar />
-            <div className="flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
+            <div className="z-10 flex h-full w-full flex-col gap-8 px-5 py-16 sm:px-[10%]">
                 <div className="flex w-full items-end justify-between">
                     <div className="flex h-96 flex-col justify-between">
                         <div className="mt-1 flex flex-col gap-2">
