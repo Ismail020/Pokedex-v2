@@ -16,8 +16,11 @@ interface PokemonInfoProps {
 
 export default function PokemonInfo({ pokemon, species }: PokemonInfoProps) {
     useEffect(() => {
-        addToRecentlyViewed(pokemon.name);
-    }, [pokemon.name]);
+        addToRecentlyViewed(
+            pokemon.name,
+            pokemon.sprites.other?.home.front_default || "/PokemonEgg.png",
+        );
+    }, [pokemon.name, pokemon.sprites.other?.home.front_default]);
 
     const pokemonVariant = {
         name: getBaseName(pokemon.name),

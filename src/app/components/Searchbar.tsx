@@ -105,7 +105,7 @@ export default function Searchbar() {
     };
 
     return (
-        <div>
+        <div className="p-5">
             <div
                 className="flex w-full cursor-pointer items-center justify-between rounded-md bg-foreground py-1.5 pl-2 pr-3 text-gray-400 shadow-custom transition duration-300 ease-in-out hover:bg-foregroundHover"
                 onClick={() => setOpen(!open)}
