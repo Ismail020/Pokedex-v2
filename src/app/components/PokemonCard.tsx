@@ -82,9 +82,11 @@ export default function PokemonCard({ pokemonData }: PokemonCardProps) {
                     <div className="relative h-28 w-28 rounded-full bg-white bg-opacity-10">
                         <Image
                             src={
-                                pokemonDetails.sprites.other?.home.front_default ||
-                                pokemonDetails.sprites.other?.["official-artwork"]
-                                    ?.front_default ||
+                                pokemonDetails.sprites.other?.home
+                                    .front_default ||
+                                pokemonDetails.sprites.other?.[
+                                    "official-artwork"
+                                ]?.front_default ||
                                 "/PokemonEgg.png"
                             }
                             alt={pokemonData.name}

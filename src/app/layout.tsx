@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.scss";
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const sora = Sora({
     weight: ["100", "200", "300", "400", "500", "600", "700", "800"],

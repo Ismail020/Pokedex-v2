@@ -24,28 +24,33 @@ export default function Sidebar() {
                 <Searchbar />
 
                 <div>
-                    <p className="font-atkinson p-5 text-2xl text-white">
+                    <p className="p-5 font-atkinson text-2xl text-white">
                         Recently viewed
                     </p>
                     <div className="flex gap-5 overflow-x-auto whitespace-nowrap px-5">
-                        {recentlyViewed.map((recentlyViewed: RecentlyViewedPokemon, index: number) => (
-                            <Link
-                                className="relative h-28 w-28 flex-shrink-0 rounded-full bg-white bg-opacity-10"
-                                href={`/pokemon/${recentlyViewed.name}`}
-                                key={index}
-                            >
-                                <Image
-                                    src={
-                                        recentlyViewed.image ||
-                                        "/PokemonEgg.png"
-                                    }
-                                    alt={recentlyViewed.name}
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="mx-auto w-24 rounded-20"
-                                />
-                            </Link>
-                        ))}
+                        {recentlyViewed.map(
+                            (
+                                recentlyViewed: RecentlyViewedPokemon,
+                                index: number,
+                            ) => (
+                                <Link
+                                    className="relative h-28 w-28 flex-shrink-0 rounded-full bg-white bg-opacity-10"
+                                    href={`/pokemon/${recentlyViewed.name}`}
+                                    key={index}
+                                >
+                                    <Image
+                                        src={
+                                            recentlyViewed.image ||
+                                            "/PokemonEgg.png"
+                                        }
+                                        alt={recentlyViewed.name}
+                                        layout="fill"
+                                        objectFit="contain"
+                                        className="mx-auto w-24 rounded-20"
+                                    />
+                                </Link>
+                            ),
+                        )}
                     </div>
                 </div>
             </div>
