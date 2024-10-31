@@ -19,7 +19,7 @@ export default function Sidebar() {
     }, []);
 
     return (
-        <div className="z-30 flex min-h-screen w-full max-w-[420px] flex-col gap-[60px] shadow-custom">
+        <div className="z-30 flex min-h-screen w-full max-w-[420px] flex-col justify-between gap-[60px] shadow-custom">
             <div className="flex flex-col gap-5">
                 <Searchbar />
 
@@ -55,8 +55,17 @@ export default function Sidebar() {
                 </div>
             </div>
 
-            <div className="p-5">
-                <p className="font-atkinson text-2xl text-white">Coming soon</p>
+            <div className="w-full p-5">
+                <Link
+                    href={`/pokemon/${
+                        Math.random() < 0.5
+                            ? Math.floor(Math.random() * 1025) + 1
+                            : Math.floor(Math.random() * 277) + 10001
+                    }`}
+                    className="flex w-full items-center justify-center rounded-md py-6 text-white shadow-custom"
+                >
+                    Random pokemon
+                </Link>
             </div>
         </div>
     );
