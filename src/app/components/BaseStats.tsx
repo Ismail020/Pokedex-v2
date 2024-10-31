@@ -1,6 +1,6 @@
 "use client";
 
-import { Stat } from "../utils/PokemonData";
+import { Stat } from "../typescript/PokemonData";
 import { Tooltip } from "flowbite-react";
 import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 

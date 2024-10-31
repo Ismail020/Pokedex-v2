@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const sora = Sora({

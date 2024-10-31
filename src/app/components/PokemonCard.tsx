@@ -5,9 +5,9 @@ import { BasePokemon } from "../page";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
-import typeColors from "../utils/typeColors";
-import { Pokemon, Type } from "../utils/PokemonData";
-import { Species } from "../utils/SpeciesData";
+import typeColors from "../typescript/typeColors";
+import { Pokemon, Type } from "../typescript/PokemonData";
+import { Species } from "../typescript/SpeciesData";
 import useMouseMoveEffect from "../utils/useMouseMoveEffect";
 import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
