@@ -1,5 +1,5 @@
 import { fetchPokemon, fetchSpecies } from "@/service/action";
-import { Pokemon, Type } from "@/app/typescript/PokemonData";
+import { Pokemon } from "@/app/typescript/PokemonData";
 import Sidebar from "@/app/components/Sidebar";
 import typeColors from "@/app/typescript/typeColors";
 import PokemonView from "@/app/components/PokemonInfo";

@@ -6,6 +6,11 @@ import { useState, useEffect } from "react";
 import { getRecentlyViewed } from "../utils/recentlyViewed";
 import Link from "next/link";
 
+export interface RecentlyViewedPokemon {
+    name: string;
+    image: string;
+}
+
 export default function Sidebar() {
     const [recentlyViewed, setRecentlyViewed] = useState([]);
 
@@ -23,7 +28,7 @@ export default function Sidebar() {
                         Recently viewed
                     </p>
                     <div className="flex gap-5 overflow-x-auto whitespace-nowrap px-5">
-                        {recentlyViewed.map((recentlyViewed, index) => (
+                        {recentlyViewed.map((recentlyViewed: RecentlyViewedPokemon, index: number) => (
                             <Link
                                 className="relative h-28 w-28 flex-shrink-0 rounded-full bg-white bg-opacity-10"
                                 href={`/pokemon/${recentlyViewed.name}`}
