@@ -54,6 +54,7 @@ export default function RadarChart({ pokemonStats }: { pokemonStats: Stat[] }) {
                             borderColor: "rgb(250 204 21)",
                             borderWidth: 1,
                             pointRadius: 0,
+                            pointHitRadius: 10,
                         },
                     ],
                 }}
@@ -84,6 +85,14 @@ export default function RadarChart({ pokemonStats }: { pokemonStats: Stat[] }) {
                     plugins: {
                         legend: {
                             display: false,
+                        },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.label}: ${context.raw}`;
+                                },
+                            },
                         },
                     },
                 }}
