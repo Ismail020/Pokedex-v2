@@ -52,7 +52,7 @@ export default function PokemonSearchCard({
     return (
         <div
             className={`pokemon-card w-full rounded-20 border-none bg-foreground shadow-custom ${
-                index === selectedIndex ? "bg-white picked" : "bg-foreground"
+                index === selectedIndex ? "picked bg-white" : "bg-foreground"
             }`}
             style={
                 {
@@ -73,7 +73,11 @@ export default function PokemonSearchCard({
                             <Image
                                 src={
                                     pokemonDetails.sprites.other?.home
-                                        .front_default || "/PokemonEgg.png"
+                                        .front_default ||
+                                    pokemonDetails.sprites.other?.[
+                                        "official-artwork"
+                                    ]?.front_default ||
+                                    "/PokemonEgg.png"
                                 }
                                 alt={pokemonData.name}
                                 layout="fill"

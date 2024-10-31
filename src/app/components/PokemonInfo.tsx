@@ -8,6 +8,7 @@ import { MaleIcon, FemaleIcon } from "@/app/components/Icons";
 import { addToRecentlyViewed } from "@/app/utils/recentlyViewed";
 import capitalizeFirstLetter from "@/app/utils/capitalizeFirstLetter";
 import { getForm, getBaseName } from "@/app/utils/formUtils";
+import Radar from "./RadarChart";
 
 interface PokemonInfoProps {
     pokemon: Pokemon;
@@ -18,9 +19,11 @@ export default function PokemonInfo({ pokemon, species }: PokemonInfoProps) {
     useEffect(() => {
         addToRecentlyViewed(
             pokemon.name,
-            pokemon.sprites.other?.home.front_default || "/PokemonEgg.png",
+            pokemon.sprites.other?.home.front_default ||
+                pokemon.sprites.other?.["official-artwork"]?.front_default ||
+                "/PokemonEgg.png",
         );
-    }, [pokemon.name, pokemon.sprites.other?.home.front_default]);
+    }, [pokemon.name, pokemon.sprites.other]);
 
     const pokemonVariant = {
         name: getBaseName(pokemon.name),
@@ -66,6 +69,8 @@ export default function PokemonInfo({ pokemon, species }: PokemonInfoProps) {
                         <Image
                             src={
                                 pokemon.sprites.other?.home.front_default ||
+                                pokemon.sprites.other?.["official-artwork"]
+                                    ?.front_default ||
                                 "/PokemonEgg.png"
                             }
                             alt={pokemon.name}
@@ -73,43 +78,79 @@ export default function PokemonInfo({ pokemon, species }: PokemonInfoProps) {
                             objectFit="contain"
                         />
 
-                        <p className="font-atkinson absolute right-[-30px] top-[26px] rotate-90 text-3xl text-white text-opacity-50">
+                        <p className="absolute right-[-30px] top-[26px] rotate-90 font-atkinson text-3xl text-white text-opacity-50">
                             {pokemon.id.toString().padStart(5, "0")}
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2.5">
-                <h1 className="text-2xl text-white">Details</h1>
+            <div className="flex">
+                <div className="flex flex-col gap-2.5">
+                    <h1 className="text-2xl text-white">Details</h1>
 
-                <div className="w-fit overflow-hidden rounded-20 bg-foreground text-white shadow-custom">
-                    <div className="flex p-5 shadow-custom">
-                        <div className="w-[120px] font-black">Gender ratio</div>
-                        <div>
-                            {species.gender_rate === -1 ? (
-                                <p>Genderless</p>
-                            ) : (
-                                <div className="flex gap-5">
-                                    <div className="flex gap-2.5 text-male">
-                                        <div>
-                                            <MaleIcon />
+                    <div className="w-fit overflow-hidden rounded-20 bg-foreground text-white shadow-custom">
+                        <div className="flex p-5 shadow-custom">
+                            <div className="w-[120px] flex-shrink-0 font-black">
+                                Gender ratio
+                            </div>
+                            <div>
+                                {species.gender_rate === -1 ? (
+                                    <p>Genderless</p>
+                                ) : (
+                                    <div className="flex gap-5">
+                                        <div className="flex gap-2.5 text-male">
+                                            <div>
+                                                <MaleIcon />
+                                            </div>
+                                            {((8 - species.gender_rate) / 8) *
+                                                100}
+                                            %
                                         </div>
-                                        {((8 - species.gender_rate) / 8) * 100}%
-                                    </div>
-                                    <div className="flex gap-2.5 text-female">
-                                        <div>
-                                            <FemaleIcon />
+                                        <div className="flex gap-2.5 text-female">
+                                            <div>
+                                                <FemaleIcon />
+                                            </div>
+                                            {(species.gender_rate / 8) * 100}%
                                         </div>
-                                        {(species.gender_rate / 8) * 100}%
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
+                        </div>
+                        <div className="flex p-5">
+                            <div className="w-[120px] flex-shrink-0 font-black">
+                                Height
+                            </div>
+                            <div>{(pokemon.height / 10).toFixed(1)} m</div>
+                        </div>
+                        <div className="flex p-5 shadow-custom">
+                            <div className="w-[120px] flex-shrink-0 font-black">
+                                Weight
+                            </div>
+                            <div>
+                                {pokemon.weight / 10} kg or{" "}
+                                {Math.round((pokemon.weight / 10) * 2.20462)}{" "}
+                                lbs
+                            </div>
+                        </div>
+                        <div className="flex items-center p-5">
+                            <div className="w-[120px] flex-shrink-0 font-black">
+                                Abilities
+                            </div>
+                            <div className="flex w-full">
+                                <p>
+                                    {capitalizeFirstLetter(
+                                        pokemon.abilities[0].ability.name,
+                                    )}{" "}
+                                    {pokemon.abilities[1] &&
+                                        `and ${capitalizeFirstLetter(pokemon.abilities[1].ability.name)}`}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div className="p-5">amk</div>
-                    <div className="p-5 shadow-custom">amk</div>
                 </div>
+
+                <Radar pokemonStats={pokemon.stats} />
             </div>
         </div>
     );

@@ -165,6 +165,8 @@ export function getForm(pokemonName) {
     if (pokemonName.includes("-stellar")) return "Stellar";
     if (pokemonName.includes("-eternamax")) return "Eternamax";
     if (pokemonName.includes("-crowned")) return "Crowned";
+    if (pokemonName.includes("-starter")) return "Starter";
+    if (pokemonName.includes("-belle")) return "Belle";
     if (pokemonName.includes("-f")) return "Female";
     if (pokemonName.includes("-m")) return "Male";
     return "";
@@ -188,6 +190,7 @@ export function getBaseName(pokemonName) {
         "-average",
         "-baile",
         "-battle-bond",
+        "-belle",
         "-blade",
         "-black",
         "-blue-meteor",
@@ -289,6 +292,7 @@ export function getBaseName(pokemonName) {
         "-snowy",
         "-solo",
         "-standard",
+        "-starter",
         "-stellar",
         "-stretchy",
         "-super",
