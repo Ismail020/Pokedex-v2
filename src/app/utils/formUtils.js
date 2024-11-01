@@ -12,6 +12,14 @@ export function getForm(pokemonName) {
         if (pokemonName.includes("-y")) return "Mega Y";
         return "Mega";
     }
+    if (pokemonName.includes("-original-cap")) return "Original Cap";
+    if (pokemonName.includes("-hoenn-cap")) return "Hoenn Cap";
+    if (pokemonName.includes("-sinnoh-cap")) return "Sinnoh Cap";
+    if (pokemonName.includes("-unova-cap")) return "Unova Cap";
+    if (pokemonName.includes("-kalos-cap")) return "Kalos Cap";
+    if (pokemonName.includes("-alola-cap")) return "Alola Cap";
+    if (pokemonName.includes("-partner-cap")) return "Partner Cap";
+    if (pokemonName.includes("-world-cap")) return "World Cap";
     if (pokemonName.includes("alola")) {
         if (pokemonName.includes("-totem")) return "Alolan Totem";
         if (pokemonName.includes("-cap")) return "Alolan Cap";
@@ -166,7 +174,12 @@ export function getForm(pokemonName) {
     if (pokemonName.includes("-eternamax")) return "Eternamax";
     if (pokemonName.includes("-crowned")) return "Crowned";
     if (pokemonName.includes("-starter")) return "Starter";
+    if (pokemonName.includes("-rock-star")) return "Rock Star";
     if (pokemonName.includes("-belle")) return "Belle";
+    if (pokemonName.includes("-pop-star")) return "Pop Star";
+    if (pokemonName.includes("-phd")) return "PhD";
+    if (pokemonName.includes("-libre")) return "Libre";
+    if (pokemonName.includes("-cosplay")) return "Cosplay";
     if (pokemonName.includes("-f")) return "Female";
     if (pokemonName.includes("-m")) return "Male";
     return "";
@@ -199,6 +212,14 @@ export function getBaseName(pokemonName) {
         "-blue",
         "-bloodmoon",
         "-bulu",
+        "-original-cap",
+        "-original-cap",
+        "-hoenn-cap",
+        "-sinnoh-cap",
+        "-unova-cap",
+        "-kalos-cap",
+        "-partner-cap",
+        "-world-cap",
         "-cap",
         "-complete",
         "-cornerstone-mask",
@@ -325,6 +346,11 @@ export function getBaseName(pokemonName) {
         "-yellow",
         "-zen",
         "-zero",
+        "-rock-star",
+        "-pop-star",
+        "-phd",
+        "-libre",
+        "-cosplay",
         "-m",
         "-fan",
         "-frost",
