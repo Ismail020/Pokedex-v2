@@ -171,6 +171,9 @@ export default function Searchbar() {
                                                 pokemonData={pokemon}
                                                 index={index}
                                                 selectedIndex={selectedIndex}
+                                                ref={(el) => {
+                                                    itemRefs.current[index] = el;
+                                                }}
                                             />
                                         ))}
                                     </ul>
