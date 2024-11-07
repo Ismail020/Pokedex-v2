@@ -351,6 +351,7 @@ export function getBaseName(pokemonName) {
         "-phd",
         "-libre",
         "-cosplay",
+        "-mow",
         "-m",
         "-fan",
         "-frost",

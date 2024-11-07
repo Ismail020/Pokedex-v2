@@ -1,3 +1,5 @@
+import { BasePokemon } from "../page";
+
 export interface Species {
     base_happiness: number;
     capture_rate: number;
@@ -67,5 +69,5 @@ export interface PokedexNumber {
 
 export interface Variety {
     is_default: boolean;
-    pokemon: Color;
+    pokemon: BasePokemon;
 }

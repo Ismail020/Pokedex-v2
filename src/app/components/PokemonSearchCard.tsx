@@ -10,6 +10,7 @@ import { Pokemon, Type } from "../typescript/PokemonData";
 import PokemonSearchCardSkeleton from "./PokemonSearchCardSkeleton";
 import useMouseMoveEffect from "../utils/useMouseMoveEffect";
 import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+import { getBaseName, getForm } from "../utils/formUtils";
 
 type PokemonCardProps = {
     pokemonData: BasePokemon;
@@ -19,7 +20,9 @@ type PokemonCardProps = {
 
 const PokemonSearchCard = forwardRef<HTMLLIElement, PokemonCardProps>(
     ({ pokemonData, index, selectedIndex }, ref) => {
-        const [pokemonDetails, setPokemonDetails] = useState<Pokemon | null>(null);
+        const [pokemonDetails, setPokemonDetails] = useState<Pokemon | null>(
+            null,
+        );
         const [loading, setLoading] = useState(true);
 
         useEffect(() => {
@@ -47,11 +50,18 @@ const PokemonSearchCard = forwardRef<HTMLLIElement, PokemonCardProps>(
             ? typeColors[pokemonDetails.types[1].type.name]
             : gradientStart;
 
+        const pokemonVariant = {
+            name: getBaseName(pokemonData.name),
+            form: getForm(pokemonData.name),
+        };
+
         return (
             <li
                 ref={ref}
                 className={`pokemon-card w-full rounded-20 border-none bg-foreground shadow-custom ${
-                    index === selectedIndex ? "picked bg-white" : "bg-foreground"
+                    index === selectedIndex
+                        ? "picked bg-white"
+                        : "bg-foreground"
                 }`}
                 style={
                     {
@@ -87,10 +97,13 @@ const PokemonSearchCard = forwardRef<HTMLLIElement, PokemonCardProps>(
                             <div className="flex flex-col justify-around">
                                 <span className="text-sm text-white text-opacity-50">
                                     N°
-                                    {pokemonDetails.id.toString().padStart(3, "0")}
+                                    {pokemonDetails.id
+                                        .toString()
+                                        .padStart(3, "0")}
                                 </span>
                                 <h3 className="text-lg font-medium text-white">
-                                    {capitalizeFirstLetter(pokemonDetails.name)}
+                                    {capitalizeFirstLetter(pokemonVariant.name)}{" "}
+                                    {pokemonVariant.form}
                                 </h3>
                             </div>
                         </div>
@@ -119,7 +132,7 @@ const PokemonSearchCard = forwardRef<HTMLLIElement, PokemonCardProps>(
                 )}
             </li>
         );
-    }
+    },
 );
 
 PokemonSearchCard.displayName = "PokemonSearchCard";
