@@ -172,7 +172,8 @@ export default function Searchbar() {
                                                 index={index}
                                                 selectedIndex={selectedIndex}
                                                 ref={(el) => {
-                                                    itemRefs.current[index] = el;
+                                                    itemRefs.current[index] =
+                                                        el;
                                                 }}
                                             />
                                         ))}

@@ -1,4 +1,8 @@
-import { fetchEvolutionChain, fetchPokemon, fetchSpecies } from "@/service/action";
+import {
+    fetchEvolutionChain,
+    fetchPokemon,
+    fetchSpecies,
+} from "@/service/action";
 import { Pokemon } from "@/app/typescript/PokemonData";
 import Sidebar from "@/app/components/Sidebar";
 import typeColors from "@/app/typescript/typeColors";
@@ -13,7 +17,9 @@ interface Params {
 export default async function PokemonPage({ params }: Params) {
     const data: Pokemon = await fetchPokemon(params.pokemon);
     const species = await fetchSpecies(data.species.url);
-    const evolutionChain = await fetchEvolutionChain(species.evolution_chain.url);
+    const evolutionChain = await fetchEvolutionChain(
+        species.evolution_chain.url,
+    );
 
     const gradientStart = data?.types[0]?.type.name
         ? typeColors[data.types[0].type.name]
@@ -36,7 +42,11 @@ export default async function PokemonPage({ params }: Params) {
             <div className="rotate-gradient absolute right-0 top-0 h-[300px] w-[300px]"></div>
 
             <Sidebar />
-            <PokemonView pokemon={data} species={species} evolutionChain={evolutionChain} />
+            <PokemonView
+                pokemon={data}
+                species={species}
+                evolutionChain={evolutionChain}
+            />
         </div>
     );
 }
