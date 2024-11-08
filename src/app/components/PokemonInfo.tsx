@@ -41,7 +41,7 @@ export default function PokemonInfo({
                 : "") +
             ".gif";
 
-        const checkImage = (url) => {
+        const checkImage = (url: string) => {
             return new Promise((resolve) => {
                 const img = new Image();
                 img.src = url;
