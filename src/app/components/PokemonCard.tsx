@@ -82,6 +82,14 @@ export default function PokemonCard({ pokemonData }: PokemonCardProps) {
                     <div className="relative h-28 w-28 rounded-full bg-white bg-opacity-10">
                         <Image
                             src={
+                                "/gifs/" +
+                                    pokemonDetails.name.replace(/-/g, "_") +
+                                    (pokemonDetails.forms &&
+                                    pokemonDetails.forms[0].name !==
+                                        pokemonDetails.name
+                                        ? `_${pokemonDetails.forms[0].name.split("-")[1]}`
+                                        : "") +
+                                    ".gif" ||
                                 pokemonDetails.sprites.other?.home
                                     .front_default ||
                                 pokemonDetails.sprites.other?.[
