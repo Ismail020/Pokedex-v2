@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect } from "react";
+import NextImage from "next/image";
+import { useEffect, useState } from "react";
 import { Species } from "../typescript/SpeciesData";
 import { Pokemon, Type } from "../typescript/PokemonData";
 import { MaleIcon, FemaleIcon } from "@/app/components/Icons";
@@ -23,6 +23,8 @@ export default function PokemonInfo({
     species,
     evolutionChain,
 }: PokemonInfoProps) {
+    const [imageUrl, setImageUrl] = useState("");
+
     useEffect(() => {
         addToRecentlyViewed(
             pokemon.name,
@@ -30,7 +32,40 @@ export default function PokemonInfo({
                 pokemon.sprites.other?.["official-artwork"]?.front_default ||
                 "/PokemonEgg.png",
         );
-    }, [pokemon.name, pokemon.sprites.other]);
+
+        const gifUrl =
+            "/gifs/" +
+            pokemon.name.replace(/-/g, "_") +
+            (pokemon.forms && pokemon.forms[0].name !== pokemon.name
+                ? `_${pokemon.forms[0].name.split("-")[1]}`
+                : "") +
+            ".gif";
+
+        const checkImage = (url) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = url;
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+            });
+        };
+
+        checkImage(gifUrl).then((exists) => {
+            if (exists) {
+                setImageUrl(gifUrl);
+            } else if (pokemon.sprites.other?.home.front_default) {
+                setImageUrl(pokemon.sprites.other.home.front_default);
+            } else if (
+                pokemon.sprites.other?.["official-artwork"]?.front_default
+            ) {
+                setImageUrl(
+                    pokemon.sprites.other["official-artwork"].front_default,
+                );
+            } else {
+                setImageUrl("/PokemonEgg.png");
+            }
+        });
+    }, [pokemon]);
 
     const pokemonVariant = {
         name: getBaseName(pokemon.name),
@@ -48,7 +83,7 @@ export default function PokemonInfo({
                                     key={index}
                                     className="relative h-[50px] w-[50px]"
                                 >
-                                    <Image
+                                    <NextImage
                                         src={`/types/${type.type.name}.svg`}
                                         alt="Pokemon type"
                                         layout="fill"
@@ -73,13 +108,8 @@ export default function PokemonInfo({
 
                 <div className="h-96 w-96">
                     <div className="relative h-full w-full">
-                        <Image
-                            src={
-                                pokemon.sprites.other?.home.front_default ||
-                                pokemon.sprites.other?.["official-artwork"]
-                                    ?.front_default ||
-                                "/PokemonEgg.png"
-                            }
+                        <NextImage
+                            src={imageUrl}
                             alt={pokemon.name}
                             layout="fill"
                             objectFit="contain"
@@ -93,7 +123,7 @@ export default function PokemonInfo({
             </div>
 
             <div className="grid grid-cols-2 gap-5">
-                <div className="flex flex-col gap-16 h-fit">
+                <div className="flex h-fit flex-col gap-16">
                     <div className="flex flex-col gap-2.5">
                         <h1 className="text-2xl text-white">Details</h1>
 
@@ -173,9 +203,7 @@ export default function PokemonInfo({
                 />
             </div>
 
-            <div className="grid grid-cols-2">
-                
-            </div>
+            <div className="grid grid-cols-2"></div>
         </div>
     );
 }

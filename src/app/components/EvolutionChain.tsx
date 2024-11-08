@@ -20,57 +20,50 @@ export default function EvolutionChain({
     return (
         <div>
             <div className="flex flex-col gap-16">
-                <div className="flex flex-col gap-2.5">
-                    {evolutionChain.chain.evolves_to.length > 0 && (
-                        <>
-                            <h1 className="text-2xl text-white">Base stage</h1>
+                {evolutionChain.chain.evolves_to.length > 0 && (
+                    <>
+                        <div className="flex flex-col gap-2.5">
+                            <h1 className="text-2xl text-white">
+                                Evolution chain
+                            </h1>
                             <PokemonCardShort
                                 pokemonData={evolutionChain.chain.species}
                             />
-                        </>
-                    )}
 
-                    {evolutionChain.chain.evolves_to.length > 0 && (
-                        <>
-                            <h1 className="text-2xl text-white">Stage 1</h1>
+                            {evolutionChain.chain.evolves_to.length > 0 &&
+                                evolutionChain.chain.evolves_to.map(
+                                    (evolution, index) => {
+                                        return (
+                                            <PokemonCardShort
+                                                key={index}
+                                                pokemonData={evolution.species}
+                                            />
+                                        );
+                                    },
+                                )}
 
-                            {evolutionChain.chain.evolves_to.map(
-                                (evolution, index) => {
-                                    return (
-                                        <PokemonCardShort
-                                            key={index}
-                                            pokemonData={evolution.species}
-                                        />
-                                    );
-                                },
-                            )}
-                        </>
-                    )}
-
-                    {evolutionChain.chain.evolves_to.some(
-                        (evolution) => evolution.evolves_to.length > 0,
-                    ) && (
-                        <>
-                            <h1 className="text-2xl text-white">Stage 2</h1>
-                            {evolutionChain.chain.evolves_to.map(
-                                (evolution, index) => {
-                                    return evolution.evolves_to.map(
-                                        (nextEvolution, nextIndex) => {
-                                            return (
-                                                <PokemonCardShort
-                                                    key={`${index}-${nextIndex}`}
-                                                    pokemonData={
-                                                        nextEvolution.species
-                                                    }
-                                                />
-                                            );
-                                        },
-                                    );
-                                },
-                            )}
-                        </>
-                    )}
-                </div>
+                            {evolutionChain.chain.evolves_to.some(
+                                (evolution) => evolution.evolves_to.length > 0,
+                            ) &&
+                                evolutionChain.chain.evolves_to.map(
+                                    (evolution, index) => {
+                                        return evolution.evolves_to.map(
+                                            (nextEvolution, nextIndex) => {
+                                                return (
+                                                    <PokemonCardShort
+                                                        key={`${index}-${nextIndex}`}
+                                                        pokemonData={
+                                                            nextEvolution.species
+                                                        }
+                                                    />
+                                                );
+                                            },
+                                        );
+                                    },
+                                )}
+                        </div>
+                    </>
+                )}
 
                 <div className="flex flex-col gap-2.5">
                     {varieties.length > 1 && (
