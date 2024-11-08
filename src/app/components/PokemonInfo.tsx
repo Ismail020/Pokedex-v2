@@ -35,9 +35,10 @@ export default function PokemonInfo({
 
         const gifUrl =
             "/gifs/" +
-            pokemon.name.replace(/-/g, "_") +
-            (pokemon.forms && pokemon.forms[0].name !== pokemon.name
-                ? `_${pokemon.forms[0].name.split("-")[1]}`
+            pokemon.name.toLowerCase().replace(/-/g, "_") +
+            (pokemon.forms &&
+            pokemon.forms[0].name.toLowerCase() !== pokemon.name.toLowerCase()
+                ? `_${pokemon.forms[0].name.toLowerCase().split("-")[1]}`
                 : "") +
             ".gif";
 
