@@ -23,7 +23,7 @@ export default function PokemonInfo({
     species,
     evolutionChain,
 }: PokemonInfoProps) {
-    const [imageUrl, setImageUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState("/transparent.png");
 
     useEffect(() => {
         addToRecentlyViewed(
